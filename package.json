@@ -1,0 +1,24 @@
+{
+  "name": "discussion-bot",
+  "version": "1.0.0",
+  "description": "Discussion bot that automatically create discussion thread based on scheduled time",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/omnisyle/discussion-bot.git"
+  },
+  "keywords": [
+    "discussion",
+    "bot",
+    "github"
+  ],
+  "author": "Si Le",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/omnisyle/discussion-bot/issues"
+  },
+  "homepage": "https://github.com/omnisyle/discussion-bot#readme"
+}
