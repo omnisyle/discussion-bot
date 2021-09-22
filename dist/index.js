@@ -36,7 +36,7 @@ const getRepoInformation = async (repoOwner, repoName) => {
       repoName,
       repoOwner,
     });
-    core.info(`Got repo info: ${JSON.stringify(repoInfoResp)}`);
+
     return repoInfoResp.repository;
   } catch (error) {
     if (error instanceof GraphqlResponseError) {
@@ -88,7 +88,7 @@ const createNewDiscussion = async ({
   title,
   body,
 }) => {
-  core.info(`Creating new discussion with options: ${JSON.stringify(options)}`);
+  core.info(`Creating new discussion with: title ${title}`);
 
   const query = `
     mutation CreateDiscussion($input: CreateDiscussionInput!) {
