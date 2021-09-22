@@ -90,7 +90,7 @@ const createNewDiscussion = async ({
 }) => {
   core.info(`Creating new discussion with: title ${title}`);
 
-  const query = `
+  const mutationQuery = `
     mutation CreateDiscussion($input: CreateDiscussionInput!) {
       # input type: CreateDiscussionInput
       createDiscussion(input: $input) {
@@ -105,11 +105,13 @@ const createNewDiscussion = async ({
     }
   `;
 
-  const createDiscussionResp = await octokit.graphql(query, {
-    repositoryId,
-    categoryId,
-    body,
-    title,
+  const createDiscussionResp = await octokit.graphql(mutationQuery, {
+    input: {
+      repositoryId,
+      categoryId,
+      body,
+      title,
+    },
   });
 
   const discussion = createDiscussionResp.createDiscussion.discussion;
