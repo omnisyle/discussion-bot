@@ -31,12 +31,39 @@ const getRepoInformation = async (repoOwner, repoName) => {
     }
   `;
 
-  const repoInfoResp = await octokit.graphql(query, {
-    repoName,
-    repoOwner,
-  });
+  try {
+    const repoInfoResp = await octokit.graphql(query, {
+      repoName,
+      repoOwner,
+    });
+    core.info(`Got repo info: ${JSON.stringify(repoInfoResp)}`);
+    return repoInfoResp.repository;
+  } catch (error) {
+    if (error instanceof GraphqlResponseError) {
+      // do something with the error, allowing you to detect a graphql response error,
+      // compared to accidentally catching unrelated errors.
 
-  return repoInfoResp.data.repository;
+      // server responds with an object like the following (as an example)
+      // class GraphqlResponseError {
+      //  "headers": {
+      //    "status": "403",
+      //  },
+      //  "data": null,
+      //  "errors": [{
+      //   "message": "Field 'bioHtml' doesn't exist on type 'User'",
+      //   "locations": [{
+      //    "line": 3,
+      //    "column": 5
+      //   }]
+      //  }]
+      // }
+
+      core.debug(`Request failed: ${error.request}`);
+      core.debug(error.message);
+    } else {
+      throw error;
+    }
+  }
 };
 
 const searchForCategory = (categoryName, repoInfo) => {
@@ -85,7 +112,7 @@ const createNewDiscussion = async ({
     title,
   });
 
-  const discussion = createDiscussionResp.data.createDiscussion.discussion;
+  const discussion = createDiscussionResp.createDiscussion.discussion;
 
   return discussion;
 };
@@ -123,6 +150,7 @@ const run = async (inputs) => {
     core.info(`Discussion created with id: ${discussion.id}`);
   } catch (error) {
     core.setFailed(`Error encountered: ${error}.`);
+    console.error(error.stack || error);
   }
 };
 
