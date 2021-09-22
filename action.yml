@@ -1,0 +1,26 @@
+name: 'Discussion bot'
+description: 'Create a discussion topic on schedule'
+inputs:
+  token:
+    description: 'Github token'
+    required: true
+    default: ''
+  repo:  # id of input
+    description: 'Repository Name in owner/repo form'
+    required: true
+    default: ''
+  title-template:  # id of input
+    description: 'Handlebar template for title'
+    required: true
+    default: ''
+  body-template:
+    description: 'Handlebar template for body'
+    required: true
+    default: ''
+  category:
+    description: 'Discussion category'
+    require: true
+    default: ''
+runs:
+  using: 'node12'
+  main: 'lib/index.js'
