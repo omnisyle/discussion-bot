@@ -79,6 +79,14 @@ const searchForCategory = (categoryName, repoInfo) => {
     }
   });
 
+  if (!foundNode) {
+    const categoriesList = categories.map((edge) => edge.node.name);
+    throw new Error(
+      `Category not found, list of categories: ${categoriesList}`
+    );
+  }
+
+  core.info(`Found category node ${foundNode}`);
   return foundNode;
 };
 
