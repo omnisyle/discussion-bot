@@ -73,10 +73,7 @@ const searchForCategory = (categoryName, repoInfo) => {
 
   const foundNode = categories.find((edge) => {
     const node = edge.node;
-
-    if (node.name === categoryName) {
-      return node;
-    }
+    return node.name === categoryName;
   });
 
   if (!foundNode) {
@@ -86,7 +83,7 @@ const searchForCategory = (categoryName, repoInfo) => {
     );
   }
 
-  return foundNode;
+  return foundNode.node;
 };
 
 const createNewDiscussion = async ({
