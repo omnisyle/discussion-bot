@@ -86,7 +86,6 @@ const searchForCategory = (categoryName, repoInfo) => {
     );
   }
 
-  core.info(`Found category node ${foundNode}`);
   return foundNode;
 };
 
@@ -149,6 +148,8 @@ const run = async (inputs) => {
 
     const repoInfo = await getRepoInformation(repoOwner, repoName);
     const category = searchForCategory(inputs.category, repoInfo);
+
+    core.info(`Found category node ${JSON.stringify(category)}`);
 
     const discussion = await createNewDiscussion({
       repositoryId: repoInfo.id,
